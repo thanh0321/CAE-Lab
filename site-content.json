@@ -224,8 +224,64 @@
           "title": "FY27",
           "type": "comingSoon",
           "text": "Coming soon"
+        },
+        {
+          "title": "New link",
+          "type": "link",
+          "label": "Open",
+          "url": ""
+        },
+        {
+          "title": "New group",
+          "type": "group",
+          "items": []
         }
       ]
+    },
+    {
+      "title": "Checksheet",
+      "description": "",
+      "items": [
+        {
+          "title": "Front Impact",
+          "type": "link",
+          "label": "Open",
+          "url": ""
+        },
+        {
+          "title": "Side Impact",
+          "type": "link",
+          "label": "Open",
+          "url": ""
+        },
+        {
+          "title": "Rear Impact",
+          "type": "link",
+          "label": "Open",
+          "url": ""
+        },
+        {
+          "title": "Pedetrian",
+          "type": "link",
+          "label": "Open",
+          "url": ""
+        }
+      ]
+    },
+    {
+      "title": "New section",
+      "description": "",
+      "items": []
+    },
+    {
+      "title": "New section",
+      "description": "",
+      "items": []
+    },
+    {
+      "title": "New section",
+      "description": "",
+      "items": []
     }
   ]
 }
