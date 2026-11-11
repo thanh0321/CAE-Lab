@@ -6,51 +6,158 @@
       "title": "Manual",
       "description": "CAE manuals by impact area.",
       "items": [
-        { "title": "Front Impact", "type": "link", "label": "Open manual", "url": "https://example.com/manual/front-impact.html" },
-        { "title": "Side Impact", "type": "link", "label": "Open manual", "url": "https://example.com/manual/side-impact.html" },
-        { "title": "Rear Impact", "type": "link", "label": "Open manual", "url": "https://example.com/manual/rear-impact.html" },
-        { "title": "Pedestrain", "type": "link", "label": "Open manual", "url": "https://example.com/manual/pedestrain.html" }
+        {
+          "title": "Front Impact",
+          "type": "link",
+          "label": "Open manual",
+          "url": "https://example.com/manual/front-impact.html"
+        },
+        {
+          "title": "Side Impact",
+          "type": "link",
+          "label": "Open manual",
+          "url": "https://example.com/manual/side-impact.html"
+        },
+        {
+          "title": "Rear Impact",
+          "type": "link",
+          "label": "Open manual",
+          "url": "https://example.com/manual/rear-impact.html"
+        },
+        {
+          "title": "Pedestrian",
+          "type": "link",
+          "label": "Open manual",
+          "url": "https://example.com/manual/pedestrain.html"
+        }
       ]
     },
     {
       "title": "手順書",
       "description": "Work procedures by impact area.",
       "items": [
-        { "title": "Front Impact", "type": "link", "label": "手順書を開く", "url": "https://example.com/procedure/front-impact.html" },
-        { "title": "Side Impact", "type": "link", "label": "手順書を開く", "url": "https://example.com/procedure/side-impact.html" },
-        { "title": "Rear Impact", "type": "link", "label": "手順書を開く", "url": "https://example.com/procedure/rear-impact.html" },
-        { "title": "Pedestrain", "type": "link", "label": "手順書を開く", "url": "https://example.com/procedure/pedestrain.html" }
+        {
+          "title": "Front Impact",
+          "type": "link",
+          "label": "手順書を開く",
+          "url": "https://example.com/procedure/front-impact.html"
+        },
+        {
+          "title": "Side Impact",
+          "type": "link",
+          "label": "手順書を開く",
+          "url": "https://example.com/procedure/side-impact.html"
+        },
+        {
+          "title": "Rear Impact",
+          "type": "link",
+          "label": "手順書を開く",
+          "url": "https://example.com/procedure/rear-impact.html"
+        },
+        {
+          "title": "Pedestrian",
+          "type": "link",
+          "label": "手順書を開く",
+          "url": "https://example.com/procedure/pedestrain.html"
+        }
       ]
     },
     {
       "title": "新人育成",
       "description": "Training materials for new team members.",
       "items": [
-        { "title": "Front Impact", "type": "button", "label": "Open training", "url": "https://example.com/training/front-impact.html" },
-        { "title": "Side Impact", "type": "button", "label": "Open training", "url": "https://example.com/training/side-impact.html" },
-        { "title": "Rear Impact", "type": "button", "label": "Open training", "url": "https://example.com/training/rear-impact.html" },
-        { "title": "Pedestrain", "type": "button", "label": "Open training", "url": "https://example.com/training/pedestrain.html" }
+        {
+          "title": "Front Impact",
+          "type": "button",
+          "label": "Open training",
+          "url": "https://example.com/training/front-impact.html"
+        },
+        {
+          "title": "Side Impact",
+          "type": "button",
+          "label": "Open training",
+          "url": "https://example.com/training/side-impact.html"
+        },
+        {
+          "title": "Rear Impact",
+          "type": "button",
+          "label": "Open training",
+          "url": "https://example.com/training/rear-impact.html"
+        },
+        {
+          "title": "Pedestrian",
+          "type": "button",
+          "label": "Open training",
+          "url": "https://example.com/training/pedestrain.html"
+        }
       ]
     },
     {
       "title": "Script",
       "description": "Tools and shared scripts.",
       "items": [
-        { "title": "TeraTerm", "type": "button", "label": "Open", "url": "https://example.com/tools/teraterm" },
-        { "title": "Animator4", "type": "button", "label": "Open", "url": "https://example.com/tools/animator4" },
-        { "title": "HyperMesh", "type": "button", "label": "Open", "url": "https://example.com/tools/hypermesh" },
-        { "title": "Ansa", "type": "button", "label": "Open", "url": "https://example.com/tools/ansa" },
-        { "title": "Visual Enviroment", "type": "button", "label": "Open", "url": "https://example.com/tools/visual-environment" },
-        { "title": "Common", "type": "group", "items": [
-          { "title": "Template", "type": "link", "label": "Open", "url": "https://example.com/templates/common-template.html" },
-          { "title": "Checklist", "type": "button", "label": "Download", "url": "https://example.com/templates/checklist.pdf" }
-        ] },
+        {
+          "title": "TeraTerm",
+          "type": "button",
+          "label": "Open",
+          "url": "https://example.com/tools/teraterm"
+        },
+        {
+          "title": "Animator4",
+          "type": "button",
+          "label": "Open",
+          "url": "https://example.com/tools/animator4"
+        },
+        {
+          "title": "HyperMesh",
+          "type": "button",
+          "label": "Open",
+          "url": "https://example.com/tools/hypermesh"
+        },
+        {
+          "title": "Ansa",
+          "type": "button",
+          "label": "Open",
+          "url": "https://example.com/tools/ansa"
+        },
+        {
+          "title": "Visual Enviroment",
+          "type": "button",
+          "label": "Open",
+          "url": "https://example.com/tools/visual-environment"
+        },
+        {
+          "title": "Common",
+          "type": "group",
+          "items": [
+            {
+              "title": "Template",
+              "type": "link",
+              "label": "Open",
+              "url": "https://example.com/templates/common-template.html"
+            },
+            {
+              "title": "Checklist",
+              "type": "button",
+              "label": "Download",
+              "url": "https://example.com/templates/checklist.pdf"
+            }
+          ]
+        },
         {
           "title": "希望集約",
           "type": "group",
           "items": [
-            { "title": "Request form", "type": "note", "text": "Name / KNT / Request field will be added later by the admin. Use this section to collect requests from staff." },
-            { "title": "User list", "type": "note", "text": "This list can be replaced later by a proper data source or backend form service." }
+            {
+              "title": "Request form",
+              "type": "note",
+              "text": "Name / KNT / Request field will be added later by the admin. Use this section to collect requests from staff."
+            },
+            {
+              "title": "User list",
+              "type": "note",
+              "text": "This list can be replaced later by a proper data source or backend form service."
+            }
           ]
         }
       ]
@@ -63,27 +170,61 @@
           "title": "FY24",
           "type": "group",
           "items": [
-            { "title": "Summary", "type": "link", "label": "Open", "url": "https://example.com/fy24/summary.html" },
-            { "title": "Deployment list", "type": "button", "label": "Open", "url": "https://example.com/fy24/deployment-list.html" }
+            {
+              "title": "Summary",
+              "type": "link",
+              "label": "Open",
+              "url": "https://example.com/fy24/summary.html"
+            },
+            {
+              "title": "Deployment list",
+              "type": "button",
+              "label": "Open",
+              "url": "https://example.com/fy24/deployment-list.html"
+            }
           ]
         },
         {
           "title": "FY25",
           "type": "group",
           "items": [
-            { "title": "Summary", "type": "link", "label": "Open", "url": "https://example.com/fy25/summary.html" },
-            { "title": "Deployment list", "type": "button", "label": "Open", "url": "https://example.com/fy25/deployment-list.html" }
+            {
+              "title": "Summary",
+              "type": "link",
+              "label": "Open",
+              "url": "https://example.com/fy25/summary.html"
+            },
+            {
+              "title": "Deployment list",
+              "type": "button",
+              "label": "Open",
+              "url": "https://example.com/fy25/deployment-list.html"
+            }
           ]
         },
         {
           "title": "FY26",
           "type": "group",
           "items": [
-            { "title": "Summary", "type": "link", "label": "Open", "url": "https://example.com/fy26/summary.html" },
-            { "title": "Deployment list", "type": "button", "label": "Open", "url": "https://example.com/fy26/deployment-list.html" }
+            {
+              "title": "Summary",
+              "type": "link",
+              "label": "Open",
+              "url": "https://example.com/fy26/summary.html"
+            },
+            {
+              "title": "Deployment list",
+              "type": "button",
+              "label": "Open",
+              "url": "https://example.com/fy26/deployment-list.html"
+            }
           ]
         },
-        { "title": "FY27", "type": "comingSoon", "text": "Coming soon" }
+        {
+          "title": "FY27",
+          "type": "comingSoon",
+          "text": "Coming soon"
+        }
       ]
     }
   ]
