@@ -16,7 +16,7 @@
           "title": "Side Impact",
           "type": "link",
           "label": "Open manual",
-          "url": "https://example.com/manual/side-impact.html"
+          "url": "https://example.com/manual/front-impact.html"
         },
         {
           "title": "Rear Impact",
@@ -52,7 +52,7 @@
           "title": "Rear Impact",
           "type": "link",
           "label": "手順書を開く",
-          "url": "https://example.com/procedure/rear-impact.html"
+          "url": "https://example.com/manual/front-impact.html"
         },
         {
           "title": "Pedestrian",
@@ -246,25 +246,25 @@
           "title": "Front Impact",
           "type": "link",
           "label": "Open",
-          "url": ""
+          "url": "https://nissangroup-my.sharepoint.com/shared?id=%2Fpersonal%2Fmi%2Dnguyen%5Fmail%5Fnissan%5Fco%5Fjp%2FDocuments%2FSafety%2DProject%2FCheck%2DSheet%2FGK241%5FFront&listurl=%2Fpersonal%2Fmi%2Dnguyen%5Fmail%5Fnissan%5Fco%5Fjp%2FDocuments&viewid=6a3cac4f%2D2b6e%2D49d9%2Daa0e%2Dd8994d8f18d8&TeamsCID=6d55b09c%2Defde%2D408a%2Db406%2Dd6d2c372445c"
         },
         {
           "title": "Side Impact",
           "type": "link",
           "label": "Open",
-          "url": ""
+          "url": "https://nissangroup-my.sharepoint.com/shared?id=%2Fpersonal%2Fmi%2Dnguyen%5Fmail%5Fnissan%5Fco%5Fjp%2FDocuments%2FSafety%2DProject%2FCheck%2DSheet%2FGK243%5FSide&listurl=%2Fpersonal%2Fmi%2Dnguyen%5Fmail%5Fnissan%5Fco%5Fjp%2FDocuments&viewid=6a3cac4f%2D2b6e%2D49d9%2Daa0e%2Dd8994d8f18d8&TeamsCID=6d55b09c%2Defde%2D408a%2Db406%2Dd6d2c372445c"
         },
         {
           "title": "Rear Impact",
           "type": "link",
           "label": "Open",
-          "url": ""
+          "url": "https://nissangroup-my.sharepoint.com/shared?id=%2Fpersonal%2Fmi%2Dnguyen%5Fmail%5Fnissan%5Fco%5Fjp%2FDocuments%2FSafety%2DProject%2FCheck%2DSheet%2FGK242%5FRear&listurl=%2Fpersonal%2Fmi%2Dnguyen%5Fmail%5Fnissan%5Fco%5Fjp%2FDocuments&viewid=6a3cac4f%2D2b6e%2D49d9%2Daa0e%2Dd8994d8f18d8&TeamsCID=6d55b09c%2Defde%2D408a%2Db406%2Dd6d2c372445c"
         },
         {
           "title": "Pedetrian",
           "type": "link",
           "label": "Open",
-          "url": ""
+          "url": "https://nissangroup-my.sharepoint.com/shared?id=%2Fpersonal%2Fmi%2Dnguyen%5Fmail%5Fnissan%5Fco%5Fjp%2FDocuments%2FSafety%2DProject%2FCheck%2DSheet%2FGK244%5Fpede&listurl=%2Fpersonal%2Fmi%2Dnguyen%5Fmail%5Fnissan%5Fco%5Fjp%2FDocuments&viewid=6a3cac4f%2D2b6e%2D49d9%2Daa0e%2Dd8994d8f18d8&TeamsCID=6d55b09c%2Defde%2D408a%2Db406%2Dd6d2c372445c"
         }
       ]
     }
