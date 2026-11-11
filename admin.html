@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CAE Lab | Link Manager</title>
+  <style>
+    :root{--ink:#172b4d;--muted:#64748b;--blue:#1455a3;--line:#dce5ef;--bg:#f4f7fb;--white:#fff;--red:#b42318;--green:#067647}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 "Segoe UI",Arial,sans-serif}header{background:#102d52;color:white;padding:25px max(20px,calc((100vw - 1120px)/2))}h1{font-size:27px;margin:0 0 5px}header p{margin:0;color:#d9e8fb}.wrap{max-width:1120px;margin:22px auto;padding:0 18px 50px}.toolbar{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-bottom:14px}.btn{border:0;border-radius:8px;background:var(--blue);color:white;padding:9px 13px;font-weight:650;cursor:pointer;text-decoration:none;font-size:13px}.btn.secondary{background:#e8eef6;color:#24415f}.btn.danger{background:#fff0ef;color:var(--red)}.btn:hover{filter:brightness(.97)}.status{margin-left:auto;color:var(--muted);font-size:12px}.callout{border:1px solid #f1df9d;background:#fff8df;border-radius:10px;padding:12px 14px;margin:12px 0 18px;color:#62521c}.section-card{background:var(--white);border:1px solid var(--line);border-radius:13px;margin:14px 0;padding:16px;box-shadow:0 8px 22px #1834540b}.section-head{display:flex;gap:10px;align-items:end;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:11px}.section-head label{flex:1}.field-label{display:block;color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}input,select,textarea{width:100%;border:1px solid #cbd6e2;border-radius:7px;padding:8px 9px;background:#fff;color:var(--ink);font:inherit}input:focus,select:focus,textarea:focus{outline:2px solid #a9c9f5;border-color:#6292cf}.item-row{border:1px solid #e5ebf2;background:#fbfcfe;border-radius:10px;padding:11px;margin:9px 0 9px 17px}.fields{display:grid;grid-template-columns:minmax(130px,1fr) 145px minmax(170px,1.3fr) minmax(190px,1.7fr);gap:9px;align-items:end}.fields.group-fields{grid-template-columns:minmax(160px,1fr) auto}.text-field{margin-top:9px}.row-actions{display:flex;gap:6px;justify-content:flex-end;margin-top:9px}.row-actions .btn{padding:6px 9px;font-size:12px}.children{border-left:2px solid #d8e6f7;margin:12px 0 0 9px;padding-left:10px}.section-actions{display:flex;gap:8px;margin-top:12px}.empty{font-size:12px;color:#8290a1;margin:8px 0 8px 18px}.bottom{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}.help{font-size:12px;color:var(--muted);margin:7px 0}.error{color:var(--red);font-size:12px;margin:6px 0 0}.hidden{display:none!important}
+    @media(max-width:760px){.fields{grid-template-columns:1fr 1fr}.fields>label:first-child{grid-column:span 2}.fields>label.url{grid-column:span 2}.section-head{align-items:flex-start}.status{width:100%;margin-left:0}}
+  </style>
+</head>
+<body>
+  <header><h1>Link Manager</h1><p>Edit sections, nested groups, links and buttons. Changes are exported as JSON; this static page does not write to GitHub automatically.</p></header>
+  <main class="wrap">
+    <div class="toolbar">
+      <a class="btn secondary" href="index.html">← View portal</a>
+      <button class="btn secondary" id="import-button" type="button">Import JSON</button>
+      <button class="btn secondary" id="add-section" type="button">+ Add section</button>
+      <button class="btn" id="download" type="button">Download site-content.json</button>
+      <input id="file-input" class="hidden" type="file" accept=".json,application/json">
+      <span class="status" id="status" aria-live="polite">Loading content…</span>
+    </div>
+    <div class="callout"><strong>How to publish an edit:</strong> make changes here, download <code>site-content.json</code>, then replace that file in the GitHub repository and commit it. The published portal updates after GitHub Pages finishes deploying. Do not put access tokens or sensitive information in this file.</div>
+    <p class="help">Link/Button URLs should be <code>https://…</code>, <code>http://…</code>, or a relative website path. A GitHub Pages site cannot reliably open Windows UNC paths such as <code>\\server\share</code>; use an approved intranet/SharePoint URL instead.</p>
+    <div id="editor"></div>
+    <div class="bottom"><button class="btn" id="download-bottom" type="button">Download site-content.json</button></div>
+  </main>
+  <script>
+    const editor=document.getElementById('editor'), statusEl=document.getElementById('status');
+    let model={title:'CAE Lab Link Portal',description:'',sections:[]};
+    const TYPES=[['link','Link'],['button','Button'],['group','Group (nested level)'],['comingSoon','Coming soon'],['note','Text / note']];
+    function escapeText(s){return String(s??'');}
+    function setStatus(s){statusEl.textContent=s;}
+    function create(tag,cls,text){const el=document.createElement(tag);if(cls)el.className=cls;if(text!==undefined)el.textContent=text;return el;}
+    function makeInput(label,value,onChange,placeholder=''){
+      const wrapper=create('label');wrapper.appendChild(create('span','field-label',label));const input=document.createElement('input');input.value=escapeText(value);input.placeholder=placeholder;input.addEventListener('input',()=>onChange(input.value));wrapper.appendChild(input);return wrapper;
+    }
+    function makeSelect(value,onChange){const wrapper=create('label');wrapper.appendChild(create('span','field-label','Display type'));const select=document.createElement('select');TYPES.forEach(([v,l])=>{const o=document.createElement('option');o.value=v;o.textContent=l;select.appendChild(o);});select.value=TYPES.some(t=>t[0]===value)?value:'link';select.addEventListener('change',()=>onChange(select.value));wrapper.appendChild(select);return wrapper;}
+    function validUrl(url){const value=String(url||'').trim();return !value||/^(https?:\/\/|\.\.?\/|\/)/i.test(value);}
+    function renderEntry(item, siblings, index){
+      const box=create('div','item-row');
+      const fields=create('div','fields');
+      fields.appendChild(makeInput('Title',item.title,v=>{item.title=v;setStatus('Unsaved edits');},'e.g. Front Impact'));
+      fields.appendChild(makeSelect(item.type,v=>{item.type=v;if(v==='group'&&!Array.isArray(item.items))item.items=[];if(v==='note'&&!item.text)item.text='';render();setStatus('Unsaved edits');}));
+      if(item.type==='link'||item.type==='button'){
+        fields.appendChild(makeInput('Button / link label',item.label||'',v=>{item.label=v;setStatus('Unsaved edits');},'e.g. Open manual'));
+        const url=makeInput('URL',item.url||'',v=>{item.url=v;setStatus(validUrl(v)?'Unsaved edits':'URL must start with https://, http://, ./, ../ or /');},'https://… or relative path');url.classList.add('url');fields.appendChild(url);
+      } else if(item.type==='comingSoon'){
+        fields.appendChild(makeInput('Displayed text',item.text||'Coming soon',v=>{item.text=v;setStatus('Unsaved edits');},'Coming soon'));
+      } else if(item.type==='note'){
+        const textWrap=create('label','text-field');textWrap.appendChild(create('span','field-label','Note text'));const textarea=document.createElement('textarea');textarea.rows=2;textarea.value=item.text||'';textarea.addEventListener('input',()=>{item.text=textarea.value;setStatus('Unsaved edits');});textWrap.appendChild(textarea);fields.appendChild(textWrap);
+      }
+      if(item.type==='group'){
+        fields.className='fields group-fields';
+        fields.appendChild(makeInput('Group title',item.title,v=>{item.title=v;setStatus('Unsaved edits');},'e.g. FY24'));
+      }
+      box.appendChild(fields);
+      const actions=create('div','row-actions');
+      const up=create('button','btn secondary','↑');up.type='button';up.title='Move up';up.disabled=index===0;up.addEventListener('click',()=>move(siblings,index,-1));actions.appendChild(up);
+      const down=create('button','btn secondary','↓');down.type='button';down.title='Move down';down.disabled=index===siblings.length-1;down.addEventListener('click',()=>move(siblings,index,1));actions.appendChild(down);
+      if(item.type==='group'){const add=create('button','btn secondary','+ Add child');add.type='button';add.addEventListener('click',()=>{item.items=item.items||[];item.items.push({title:'New link',type:'link',label:'Open',url:''});render();setStatus('Unsaved edits');});actions.appendChild(add);}
+      const remove=create('button','btn danger','Delete');remove.type='button';remove.addEventListener('click',()=>{if(confirm('Delete “'+(item.title||'this item')+'” and its children?')){siblings.splice(index,1);render();setStatus('Unsaved edits');}});actions.appendChild(remove);box.appendChild(actions);
+      if(item.type==='group'){
+        const children=create('div','children');const list=Array.isArray(item.items)?item.items:[];
+        if(!list.length)children.appendChild(create('div','empty','Empty group — add child items when ready.'));
+        list.forEach((child,i)=>children.appendChild(renderEntry(child,list,i)));box.appendChild(children);
+      }
+      return box;
+    }
+    function move(list,index,delta){const next=index+delta;if(next<0||next>=list.length)return;[list[index],list[next]]=[list[next],list[index]];render();setStatus('Unsaved edits');}
+    function render(){editor.replaceChildren();model.sections.forEach((section,index)=>{
+      const card=create('section','section-card');const head=create('div','section-head');
+      head.appendChild(makeInput('Section / top-level category',section.title,v=>{section.title=v;setStatus('Unsaved edits');},'e.g. Manual'));
+      const del=create('button','btn danger','Delete section');del.type='button';del.addEventListener('click',()=>{if(confirm('Delete section “'+section.title+'” and all its content?')){model.sections.splice(index,1);render();setStatus('Unsaved edits');}});head.appendChild(del);card.appendChild(head);
+      const list=Array.isArray(section.items)?section.items:(section.items=[]);
+      list.forEach((item,i)=>card.appendChild(renderEntry(item,list,i)));
+      const add=create('button','btn secondary','+ Add item');add.type='button';add.addEventListener('click',()=>{list.push({title:'New link',type:'link',label:'Open',url:''});render();setStatus('Unsaved edits');});
+      const addGroup=create('button','btn secondary','+ Add group');addGroup.type='button';addGroup.addEventListener('click',()=>{list.push({title:'New group',type:'group',items:[]});render();setStatus('Unsaved edits');});
+      const actions=create('div','section-actions');actions.append(add,addGroup);card.appendChild(actions);editor.appendChild(card);
+    });}
+    function download(){
+      const invalid=[];const walk=(items,path)=>items.forEach((it,i)=>{const label=path+'/'+(it.title||('#'+(i+1)));if((it.type==='link'||it.type==='button')&&!validUrl(it.url))invalid.push(label);if(it.type==='group')walk(it.items||[],label);});
+      model.sections.forEach(s=>walk(s.items||[],s.title||'Section'));
+      if(invalid.length){alert('Please fix these invalid URLs first:\n'+invalid.join('\n'));return;}
+      const blob=new Blob([JSON.stringify(model,null,2)+'\n'],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='site-content.json';a.click();URL.revokeObjectURL(url);setStatus('Downloaded. Replace site-content.json in the repo and commit it.');
+    }
+    document.getElementById('add-section').addEventListener('click',()=>{model.sections.push({title:'New section',description:'',items:[]});render();setStatus('Unsaved edits');});
+    document.getElementById('download').addEventListener('click',download);document.getElementById('download-bottom').addEventListener('click',download);
+    document.getElementById('import-button').addEventListener('click',()=>document.getElementById('file-input').click());
+    document.getElementById('file-input').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{const data=JSON.parse(await f.text());if(!Array.isArray(data.sections))throw new Error('JSON must contain a sections array.');model=data;render();setStatus('JSON imported.');}catch(err){alert('Could not import JSON: '+err.message);}e.target.value='';});
+    fetch(new URL('site-content.json',window.location.href),{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}).then(data=>{model=data;if(!Array.isArray(model.sections))model.sections=[];render();setStatus('Loaded site-content.json. Edit, then download to publish.');}).catch(err=>{render();setStatus('Could not load JSON — import a site-content.json file to begin.');console.error(err);});
+  </script>
+</body>
+</html>

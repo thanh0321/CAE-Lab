@@ -1,0 +1,63 @@
+{
+  "title": "CAE Lab Link Portal",
+  "description": "Manuals, procedures, training materials, scripts, and yearly deployment links.",
+  "sections": [
+    {
+      "title": "Manual",
+      "description": "CAE manuals by impact area.",
+      "items": [
+        { "title": "Front Impact", "type": "link", "label": "Open manual", "url": "" },
+        { "title": "Side Impact", "type": "link", "label": "Open manual", "url": "" },
+        { "title": "Rear Impact", "type": "link", "label": "Open manual", "url": "" },
+        { "title": "Pedestrain", "type": "link", "label": "Open manual", "url": "" }
+      ]
+    },
+    {
+      "title": "手順書",
+      "description": "Work procedures by impact area.",
+      "items": [
+        { "title": "Front Impact", "type": "link", "label": "手順書を開く", "url": "" },
+        { "title": "Side Impact", "type": "link", "label": "手順書を開く", "url": "" },
+        { "title": "Rear Impact", "type": "link", "label": "手順書を開く", "url": "" },
+        { "title": "Pedestrain", "type": "link", "label": "手順書を開く", "url": "" }
+      ]
+    },
+    {
+      "title": "新人育成",
+      "description": "Training materials for new team members.",
+      "items": [
+        { "title": "Front Impact", "type": "link", "label": "資料を開く", "url": "" },
+        { "title": "Side Impact", "type": "link", "label": "資料を開く", "url": "" },
+        { "title": "Rear Impact", "type": "link", "label": "資料を開く", "url": "" },
+        { "title": "Pedestrain", "type": "link", "label": "資料を開く", "url": "" }
+      ]
+    },
+    {
+      "title": "Script",
+      "description": "Tools and shared scripts.",
+      "items": [
+        { "title": "TeraTerm", "type": "link", "label": "Open", "url": "" },
+        { "title": "Animator4", "type": "link", "label": "Open", "url": "" },
+        { "title": "HyperMesh", "type": "link", "label": "Open", "url": "" },
+        { "title": "Ansa", "type": "link", "label": "Open", "url": "" },
+        { "title": "Visual Enviroment", "type": "link", "label": "Open", "url": "" },
+        { "title": "Common", "type": "group", "items": [] },
+        {
+          "title": "希望集約",
+          "type": "note",
+          "text": "Request form and shared request list are not connected yet. A backend or approved form service is needed to collect and save submissions."
+        }
+      ]
+    },
+    {
+      "title": "展開",
+      "description": "Deployment and rollout materials by fiscal year.",
+      "items": [
+        { "title": "FY24", "type": "group", "items": [] },
+        { "title": "FY25", "type": "group", "items": [] },
+        { "title": "FY26", "type": "group", "items": [] },
+        { "title": "FY27", "type": "comingSoon", "text": "Coming soon" }
+      ]
+    }
+  ]
+}

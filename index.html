@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CAE Lab manuals, procedures, training, scripts, and deployment links.">
+  <title>CAE Lab | Link Portal</title>
+  <style>
+    :root{color-scheme:light;--ink:#172b4d;--muted:#60718a;--blue:#1455a3;--blue2:#eaf2ff;--line:#dce5ef;--surface:#fff;--bg:#f4f7fb;--teal:#087f8c;--shadow:0 12px 32px #18345412}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Segoe UI",Arial,sans-serif}
+    header{background:linear-gradient(120deg,#102d52,#1455a3);color:#fff;padding:34px max(24px,calc((100vw - 1180px)/2)) 30px}
+    .topline{display:flex;justify-content:space-between;align-items:center;gap:16px}.brand{font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;opacity:.82}
+    h1{font-size:clamp(28px,4vw,42px);line-height:1.12;margin:18px 0 8px}header p{margin:0;color:#d9e8fb;max-width:680px}
+    nav{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px}.navlink,.admin-link{color:#fff;text-decoration:none;border:1px solid #ffffff50;border-radius:999px;padding:7px 12px;font-size:13px}.navlink:hover,.admin-link:hover{background:#ffffff20}
+    main{max-width:1180px;margin:28px auto;padding:0 22px 60px}.notice{background:#fff8df;border:1px solid #f1df9d;border-radius:12px;padding:13px 16px;color:#62521c;margin-bottom:22px;font-size:13px}
+    .sections{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.section{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden;scroll-margin-top:16px}
+    .section-head{padding:18px 20px 14px;border-bottom:1px solid var(--line);background:linear-gradient(110deg,#fff,#f8fbff)}.section-head h2{margin:0;font-size:21px}.section-head p{margin:4px 0 0;color:var(--muted);font-size:13px}
+    .items{padding:10px 14px 15px}.item{margin:8px 0;border:1px solid #e8edf4;border-radius:11px;background:#fff}.item-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 13px}.item-title{font-weight:650}.item-actions{display:flex;gap:8px;align-items:center}.action{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;font-size:13px;font-weight:650;border-radius:8px;padding:7px 11px;white-space:nowrap}.action.link{color:var(--blue);background:var(--blue2)}.action.button{color:#fff;background:var(--blue)}.action:hover{filter:brightness(.95)}.missing{font-size:12px;color:#8995a5;background:#f3f5f8;padding:5px 9px;border-radius:7px}.note{padding:0 13px 13px;color:var(--muted);font-size:13px}.group{margin:10px 0 4px 18px;padding-left:13px;border-left:2px solid #d6e5f6}.group-title{font-weight:700;color:#31506f;padding:5px 0}.group .item{box-shadow:none}.empty{font-size:12px;color:#8a96a5;padding:3px 0 8px}.footer{max-width:1180px;margin:0 auto;padding:0 22px 30px;color:var(--muted);font-size:12px;display:flex;justify-content:space-between;gap:12px}.footer a{color:var(--blue)}
+    @media(max-width:760px){.sections{grid-template-columns:1fr}header{padding-top:25px}.topline{align-items:flex-start}.admin-link{font-size:12px}.item-row{align-items:flex-start}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="topline"><div class="brand">CAE Lab · Knowledge Portal</div><a class="admin-link" href="admin.html">Manage links ↗</a></div>
+    <h1 id="page-title">CAE Lab Link Portal</h1>
+    <p id="page-description">Quick access to manuals, work procedures, training materials, scripts, and deployment references.</p>
+    <nav id="section-nav" aria-label="Page sections"></nav>
+  </header>
+  <main>
+    <div class="notice"><strong>Internal documents:</strong> links can point to your approved company SharePoint or intranet URLs. Users still need the appropriate company network access and document permissions.</div>
+    <div class="sections" id="sections" aria-live="polite"></div>
+  </main>
+  <div class="footer"><span>Content is configured in <code>site-content.json</code>.</span><a href="admin.html">Open link manager</a></div>
+  <script>
+    const safeHref = (value) => {
+      const url = String(value || '').trim();
+      if (!url || /[\u0000-\u001f]/.test(url)) return '';
+      if (/^(https?:\/\/|\.\.?\/|\/)/i.test(url)) return url;
+      return '';
+    };
+    function makeAction(item) {
+      const href = safeHref(item.url);
+      if (!href) {
+        const span = document.createElement('span'); span.className = 'missing';
+        span.textContent = item.url ? 'Unsupported URL' : 'Link not added'; return span;
+      }
+      const a = document.createElement('a');
+      a.className = 'action ' + (item.type === 'button' ? 'button' : 'link');
+      a.href = href; a.textContent = item.label || (item.type === 'button' ? 'Open' : 'Open link');
+      if (/^https?:\/\//i.test(href)) { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
+      return a;
+    }
+    function renderItem(item, depth=0) {
+      const wrap = document.createElement('div'); wrap.className = 'item';
+      const row = document.createElement('div'); row.className = 'item-row';
+      const title = document.createElement('span'); title.className = 'item-title'; title.textContent = item.title || 'Untitled'; row.appendChild(title);
+      if (item.type === 'link' || item.type === 'button') row.appendChild(makeAction(item));
+      else if (item.type === 'comingSoon') { const tag=document.createElement('span');tag.className='missing';tag.textContent=item.text||'Coming soon';row.appendChild(tag); }
+      wrap.appendChild(row);
+      if (item.type === 'note' && item.text) { const note=document.createElement('div');note.className='note';note.textContent=item.text;wrap.appendChild(note); }
+      if (item.type === 'group') {
+        const children = Array.isArray(item.items) ? item.items : [];
+        if (children.length) { const group=document.createElement('div');group.className='group';children.forEach(child=>group.appendChild(renderItem(child,depth+1)));wrap.appendChild(group); }
+        else { const empty=document.createElement('div');empty.className='empty';empty.textContent='No links added yet.';wrap.appendChild(empty); }
+      }
+      return wrap;
+    }
+    fetch(new URL('site-content.json', window.location.href), {cache:'no-store'})
+      .then(response => { if (!response.ok) throw new Error('HTTP '+response.status); return response.json(); })
+      .then(data => {
+        document.title = (data.title || 'CAE Lab') + ' | Link Portal';
+        document.getElementById('page-title').textContent = data.title || 'CAE Lab Link Portal';
+        document.getElementById('page-description').textContent = data.description || '';
+        const sections = Array.isArray(data.sections) ? data.sections : [];
+        const nav=document.getElementById('section-nav'), root=document.getElementById('sections');
+        sections.forEach((section,index)=>{
+          const id='section-'+index, link=document.createElement('a');link.className='navlink';link.href='#'+id;link.textContent=section.title||'Section';nav.appendChild(link);
+          const card=document.createElement('section');card.className='section';card.id=id;
+          const head=document.createElement('div');head.className='section-head';const h=document.createElement('h2');h.textContent=section.title||'Section';head.appendChild(h);
+          if(section.description){const p=document.createElement('p');p.textContent=section.description;head.appendChild(p);}card.appendChild(head);
+          const items=document.createElement('div');items.className='items';(section.items||[]).forEach(item=>items.appendChild(renderItem(item)));card.appendChild(items);root.appendChild(card);
+        });
+        if(!sections.length) root.textContent='No sections configured.';
+      })
+      .catch(error => { const root=document.getElementById('sections');root.textContent='Could not load site-content.json. Open this site through GitHub Pages (or another web server), and verify the JSON file is valid.';console.error(error); });
+  </script>
+</body>
+</html>
